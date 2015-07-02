@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <link href="bower_components/kendo-ui-appbuilder-core/styles/kendo.mobile.all.min.css" rel="stylesheet">
+    <link href="styles/main.css" rel="stylesheet">
+
+    <!-- cordova script (this will be a 404 during development if served with `grunt serve`) -->
+    <script src="cordova.js"></script>
+
+    <script src="bower_components/kendo-ui-appbuilder-core/js/jquery.min.js"></script>
+    <script src="bower_components/kendo-ui-appbuilder-core/js/kendo.mobile.min.js"></script>
+    <script src="bower_components/everlive/min/everlive.all.min.js"></script>
+    <script src="lib/progress/progress.all.min.js"></script>
+    <script src="app.js"></script>
+    <script src="data/defaultProvider.js"></script>
+</head>
+
+<body id="kendoUiMobileApp">
+    <div data-role="layout" data-id="main">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+                <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+            </div>
+        </header>
+
+        <!-- application views will be rendered here -->
+    </div>
+
+    <div data-role="layout" data-id="main-nonav">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+
+        <!-- application views will be rendered here -->
+    </div>
+
+    <div id="appDrawer" data-role="drawer" data-title="Navigation">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+        <ul id="navigation-container" data-role="listview">
+            <li><a href="accountsView/view.html" data-icon="home">Accounts</a>
+            </li>
+            <li><a href="paymentManagementView/view.html" data-icon="cart">Payment Methods</a>
+            </li>
+            <li><a href="locationsView/view.html" data-icon="globe">Locations</a>
+            </li>
+            <li><a href="feedbackView/view.html" data-icon="edit">Feedback</a>
+            </li>
+            <li><a href="settingsView/view.html" data-icon="settings">Settings</a>
+            </li>
+        </ul>
+    </div>
+    <script src="authenticationView/index.js"></script>
+    <script src="accountsView/index.js"></script>
+    <script src="paymentManagementView/index.js"></script>
+    <script src="locationsView/index.js"></script>
+    <script src="feedbackView/index.js"></script>
+    <script src="settingsView/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<div data-role="view" data-title="Feedback" data-layout="main" data-model="app.feedbackView" data-show="app.feedbackView.onShow">
+    <div id="feedbackViewModel" class="form-view">
+        <form>
+            <ul class="form-content" data-role="listview" data-style="inset">
+                <li>
+                    <label>Example
+                        <input data-bind="value: feedbackViewModel.fields.example" placeholder="Feedback" type="text">
+                    </label>
+                </li>
+            </ul>
+
+            <div class="button-group">
+                <a data-role="button" data-bind="events: { click: feedbackViewModel.cancel }">Cancel</a>
+                <a class="km-state-active" data-role="button" data-bind="events: { click: feedbackViewModel.submit }">Confirm</a>
+            </div>
+        </form>
+    </div>
+</div>

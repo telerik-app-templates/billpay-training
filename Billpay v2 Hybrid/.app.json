@@ -1,15 +1,112 @@
 {
   "type": "kendo-ui-mobile",
-  "isNew": true,
+  "views": [
+    {
+      "type": "view",
+      "components": [
+        {
+          "type": "authentication",
+          "name": "authenticationViewModel",
+          "dataProvider": "defaultProvider",
+          "emailLabel": "Email",
+          "passwordLabel": "Password",
+          "signinLabel": "Sign In",
+          "signinRedirect": "accountsView",
+          "enableRegistration": true,
+          "gotoRegisterLabel": "Register",
+          "registerEmailLabel": "Email",
+          "registerPasswordLabel": "Password",
+          "registerNameLabel": "Name",
+          "registerLabel": "Register",
+          "registerRedirect": "accountsView",
+          "gotoSigninLabel": "Sign In"
+        }
+      ],
+      "name": "authenticationView",
+      "title": "Authentication",
+      "addToNavigation": false
+    },
+    {
+      "type": "view",
+      "components": [
+        {
+          "type": "list",
+          "name": "accountsViewModel",
+          "dataProvider": "defaultProvider",
+          "collection": "Activities",
+          "headerField": "Text",
+          "masterDetails": false,
+          "pullToRefresh": false,
+          "endlessScroll": false
+        }
+      ],
+      "name": "accountsView",
+      "title": "Accounts",
+      "addToNavigation": true,
+      "icon": "home"
+    },
+    {
+      "type": "view",
+      "components": [],
+      "name": "paymentManagementView",
+      "title": "Payment Methods",
+      "addToNavigation": true,
+      "icon": "cart"
+    },
+    {
+      "type": "view",
+      "components": [],
+      "name": "locationsView",
+      "title": "Locations",
+      "addToNavigation": true,
+      "icon": "globe"
+    },
+    {
+      "type": "view",
+      "components": [
+        {
+          "type": "form",
+          "components": [
+            {
+              "type": "field",
+              "name": "example",
+              "title": "Example",
+              "inputType": "text",
+              "placeholder": "Feedback"
+            }
+          ],
+          "name": "feedbackViewModel",
+          "submitButton": "Confirm",
+          "cancelButton": "Cancel"
+        }
+      ],
+      "name": "feedbackView",
+      "title": "Feedback",
+      "addToNavigation": true,
+      "icon": "edit"
+    },
+    {
+      "type": "view",
+      "components": [],
+      "name": "settingsView",
+      "title": "Settings",
+      "addToNavigation": true,
+      "icon": "settings"
+    }
+  ],
   "dataProviders": [
     {
       "type": "dataProvider",
-      "title": "DefaultProvider",
       "name": "defaultProvider",
+      "title": "DefaultProvider",
       "source": "everlive",
-      "offlineStorage": true,
       "everliveKey": "vLz8vZZVQiVv34y2",
-      "everliveUrl": ""
+      "everliveUrl": "//platform.telerik.com/bs-api/v1/",
+      "offlineStorage": true
     }
-  ]
+  ],
+  "name": "kendoUiMobileApp",
+  "navigation": "drawer",
+  "view": "authenticationView",
+  "skin": "flat"
 }

@@ -29,6 +29,7 @@ app.authenticationView = kendo.observable({
             var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
 
             if (data && data.result) {
+                console.log(data);
                 app.user = data.result;
                 app.mobileApp.navigate(redirect + '/view.html');
             } else {

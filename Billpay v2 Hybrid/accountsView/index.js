@@ -18,8 +18,8 @@ app.accountsView = kendo.observable({
                             field: 'UserID',
                             defaultValue: ''
                         },
-                        'Type': {
-                            field: 'Type',
+                        'UniqueID': {
+                            field: 'UniqueID',
                             defaultValue: ''
                         },
                     }

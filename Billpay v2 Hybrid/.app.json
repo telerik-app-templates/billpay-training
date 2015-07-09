@@ -108,6 +108,35 @@
       "title": "Settings",
       "addToNavigation": true,
       "icon": "settings"
+    },
+    {
+      "type": "view",
+      "components": [
+        {
+          "type": "form",
+          "components": [
+            {
+              "type": "field",
+              "name": "dropdownlist",
+              "title": "Account Type",
+              "inputType": "dropdownlist"
+            },
+            {
+              "type": "field",
+              "name": "description",
+              "title": "Description",
+              "inputType": "text",
+              "placeholder": "Description"
+            }
+          ],
+          "name": "addAccountViewModel",
+          "submitButton": "Add",
+          "cancelButton": "Cancel"
+        }
+      ],
+      "name": "addAccountView",
+      "title": "Add Account",
+      "addToNavigation": false
     }
   ],
   "dataProviders": [

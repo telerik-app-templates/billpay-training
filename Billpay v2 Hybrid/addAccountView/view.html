@@ -1,0 +1,30 @@
+<div data-role="view" data-title="Add Account" data-layout="main-nonav" data-model="app.addAccountView" data-show="app.addAccountView.onShow">
+    <div id="addAccountViewModel" class="form-view">
+        <form>
+            <ul class="form-content" data-role="listview" data-style="inset">
+                <li>
+                    <label>Account Type
+                        <select data-bind="value: addAccountViewModel.fields.dropdownlist" data-role="dropdownlist">
+                            <option value="First Option">First Option</option>
+                            <option value="Second Option">Second Option</option>
+                            <option value="Third Option">Third Option</option>
+                            <option value="Fourth Option">Fourth Option</option>
+                            <option value="First Option">Fifth Option</option>
+                            <option value="Sixth Option">Sixth Option</option>
+                        </select>
+                    </label>
+                </li>
+                <li>
+                    <label>Description
+                        <input data-bind="value: addAccountViewModel.fields.description" placeholder="Description" type="text">
+                    </label>
+                </li>
+            </ul>
+
+            <div class="button-group">
+                <a data-role="button" data-bind="events: { click: addAccountViewModel.cancel }">Cancel</a>
+                <a class="km-state-active" data-role="button" data-bind="events: { click: addAccountViewModel.submit }">Add</a>
+            </div>
+        </form>
+    </div>
+</div>

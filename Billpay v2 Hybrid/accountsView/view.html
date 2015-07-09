@@ -1,5 +1,12 @@
-<div data-role="view" data-title="Accounts" data-layout="main" data-model="app.accountsView" data-show="app.accountsView.onShow">
-
+<div data-role="view" data-title="Accounts" data-model="app.accountsView" data-show="app.accountsView.onShow">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+            <a data-role="button" data-align="right" data-icon="add" data-bind="events: { click: accountsViewModel.add }"></a>
+        </div>
+    </header>
+    
     <ul data-role="listview" data-style="inset" data-template="accountsViewModelTemplate" data-bind="{ source: accountsViewModel.dataSource, events: {click: accountsViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
     </ul>
     <script type="text/x-kendo-template" id="accountsViewModelTemplate">
@@ -8,4 +15,5 @@
             <p>#: data['UniqueID'] #</p>
         </div>
     </script>
+    
 </div>

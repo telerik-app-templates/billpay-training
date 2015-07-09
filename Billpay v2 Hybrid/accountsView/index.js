@@ -37,7 +37,12 @@ app.accountsView = kendo.observable({
                     itemModel = dataSource.getByUid(item);
                 accountsViewModel.set('currentItem', itemModel);
             },
-            currentItem: null
+            currentItem: null,
+            add: function (e) {
+                console.log(e);
+                console.log("add");
+                app.mobileApp.navigate('#addAccountView/view.html');
+            }
         });
 
     parent.set('accountsViewModel', accountsViewModel);

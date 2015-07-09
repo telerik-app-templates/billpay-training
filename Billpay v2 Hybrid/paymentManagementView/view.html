@@ -1,2 +1,11 @@
 <div data-role="view" data-title="Payment Methods" data-layout="main" data-model="app.paymentManagementView" data-show="app.paymentManagementView.onShow">
+
+    <ul data-role="listview" data-style="inset" data-template="paymentManagementViewModelTemplate" data-bind="{ source: paymentManagementViewModel.dataSource, events: {click: paymentManagementViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+    </ul>
+    <script type="text/x-kendo-template" id="paymentManagementViewModelTemplate">
+        <div class="image-with-text">
+            <h3>#: data['Type'] #</h3>
+
+        </div>
+    </script>
 </div>

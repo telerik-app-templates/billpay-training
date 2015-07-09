@@ -8,14 +8,18 @@ app.accountsView = kendo.observable({
         dataSourceOptions = {
             type: 'everlive',
             transport: {
-                typeName: 'Activities',
+                typeName: 'dbo_Accounts',
                 dataProvider: dataProvider
             },
             schema: {
                 model: {
                     fields: {
-                        'Text': {
-                            field: 'Text',
+                        'UserID': {
+                            field: 'UserID',
+                            defaultValue: ''
+                        },
+                        'Type': {
+                            field: 'Type',
                             defaultValue: ''
                         },
                     }
@@ -24,7 +28,16 @@ app.accountsView = kendo.observable({
         },
         dataSource = new kendo.data.DataSource(dataSourceOptions),
         accountsViewModel = kendo.observable({
-            dataSource: dataSource
+            dataSource: dataSource,
+            itemClick: function(e) {
+                app.mobileApp.navigate('#accountsView/details.html?uid=' + e.dataItem.uid);
+            },
+            detailsShow: function(e) {
+                var item = e.view.params.uid,
+                    itemModel = dataSource.getByUid(item);
+                accountsViewModel.set('currentItem', itemModel);
+            },
+            currentItem: null
         });
 
     parent.set('accountsViewModel', accountsViewModel);

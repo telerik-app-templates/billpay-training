@@ -1,11 +1,11 @@
 <div data-role="view" data-title="Accounts" data-layout="main" data-model="app.accountsView" data-show="app.accountsView.onShow">
 
-    <ul data-role="listview" data-style="inset" data-template="accountsViewModelTemplate" data-bind="{ source: accountsViewModel.dataSource}" data-pull-to-refresh="false" data-endless-scroll="false">
+    <ul data-role="listview" data-style="inset" data-template="accountsViewModelTemplate" data-bind="{ source: accountsViewModel.dataSource, events: {click: accountsViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
     </ul>
     <script type="text/x-kendo-template" id="accountsViewModelTemplate">
         <div class="image-with-text">
-            <h3>#: data['Text'] #</h3>
-
+            <h3>#: data['UserID'] #</h3>
+            <p>#: data['Type'] #</p>
         </div>
     </script>
 </div>

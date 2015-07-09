@@ -33,9 +33,12 @@
           "type": "list",
           "name": "accountsViewModel",
           "dataProvider": "defaultProvider",
-          "collection": "Activities",
-          "headerField": "Text",
-          "masterDetails": false,
+          "collection": "dbo_Accounts",
+          "headerField": "UserID",
+          "subHeaderField": "Type",
+          "masterDetails": true,
+          "detailHeaderField": "UserID",
+          "detailSubHeaderField": "Type",
           "pullToRefresh": false,
           "endlessScroll": false
         }
@@ -47,7 +50,20 @@
     },
     {
       "type": "view",
-      "components": [],
+      "components": [
+        {
+          "type": "list",
+          "name": "paymentManagementViewModel",
+          "dataProvider": "defaultProvider",
+          "collection": "dbo_PaymentAccounts",
+          "headerField": "Type",
+          "masterDetails": true,
+          "detailHeaderField": "Type",
+          "detailSubHeaderField": "UserID",
+          "pullToRefresh": false,
+          "endlessScroll": false
+        }
+      ],
       "name": "paymentManagementView",
       "title": "Payment Methods",
       "addToNavigation": true,

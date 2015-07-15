@@ -22,13 +22,36 @@ app.accountsView = kendo.observable({
                             field: 'UniqueID',
                             defaultValue: ''
                         },
+                        'Notes': {
+                            field: 'Notes',
+                            defaultValue: ''
+                        },
+                        'Type': {
+                            field: 'Type',
+                            defaultValue: ''
+                        },
+                        'Id': {
+                        	field: 'Id',
+                            defaultValue: ''
+                    	}
                     }
                 }
             },
+            serverFiltering: true
         },
         dataSource = new kendo.data.DataSource(dataSourceOptions),
         accountsViewModel = kendo.observable({
             dataSource: dataSource,
+            accountShow: function (e) {
+                accountsViewModel.dataSource.filter( { field: "UserID", operator: "eq", value: app.userDBO.Id } );
+                
+                $("#account-list").kendoMobileListView({
+                    template: $("#accountsViewModelTemplate").html(),
+                    style: 'inset',
+                    click: accountsViewModel.itemClick,
+                    dataSource: accountsViewModel.dataSource
+                });
+            },
             itemClick: function(e) {
                 app.mobileApp.navigate('#accountsView/details.html?uid=' + e.dataItem.uid);
             },
@@ -39,9 +62,33 @@ app.accountsView = kendo.observable({
             },
             currentItem: null,
             add: function (e) {
-                console.log(e);
-                console.log("add");
-                app.mobileApp.navigate('#addAccountView/view.html');
+                app.mobileApp.navigate('#accountsView/add.html');
+            },
+            addShow: function (e) {
+                accountsViewModel.addFields.UserID = app.userDBO.Id;
+            },
+            addFields: {
+                UserID: '',
+                UniqueID: '',
+                Notes: '',
+                Type: ''
+            },
+            submit: function() {
+                console.log("submit");
+                console.log(accountsViewModel);
+                
+                var data = app.data.defaultProvider.data('dbo_Accounts');
+                data.create(accountsViewModel.addFields,
+                	function (addSuccess) {
+                    	console.log("addwin");
+                    	app.mobileApp.navigate('#:back');
+                	},
+                	function (addError) {
+                    	console.log("adderror");
+                });
+            },
+        	cancel: function() {
+                app.mobileApp.navigate('#:back');
             }
         });
 

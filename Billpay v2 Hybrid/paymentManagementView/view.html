@@ -1,11 +1,18 @@
-<div data-role="view" data-title="Payment Methods" data-layout="main" data-model="app.paymentManagementView" data-show="app.paymentManagementView.onShow">
-
+<div data-role="view" data-title="Payment Methods" data-model="app.paymentManagementView" data-show="app.paymentManagementView.onShow">
+    <header data-role="header">
+        <div data-role="navbar">
+            <span data-role="view-title"></span>
+            <a data-role="button" href="#appDrawer" data-rel="drawer" data-align="left" data-icon="drawer-button"></a>
+            <a data-role="button" data-align="right" data-icon="add" data-bind="events: { click: paymentManagementViewModel.add }"></a>
+        </div>
+    </header>
+    
     <ul data-role="listview" data-style="inset" data-template="paymentManagementViewModelTemplate" data-bind="{ source: paymentManagementViewModel.dataSource, events: {click: paymentManagementViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
     </ul>
     <script type="text/x-kendo-template" id="paymentManagementViewModelTemplate">
         <div class="image-with-text">
             <h3>#: data['Type'] #</h3>
-
+			<p>#: data['Description'] #</p>
         </div>
     </script>
 </div>

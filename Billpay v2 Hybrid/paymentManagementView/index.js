@@ -18,6 +18,10 @@ app.paymentManagementView = kendo.observable({
                             field: 'Type',
                             defaultValue: ''
                         },
+                        'Description': {
+                            field: 'Description',
+                            defaultValue: ''
+                        }
                     }
                 }
             },
@@ -33,7 +37,10 @@ app.paymentManagementView = kendo.observable({
                     itemModel = dataSource.getByUid(item);
                 paymentManagementViewModel.set('currentItem', itemModel);
             },
-            currentItem: null
+            currentItem: null,
+            add: function (e) {
+                console.log("add PM");
+            }
         });
 
     parent.set('paymentManagementViewModel', paymentManagementViewModel);

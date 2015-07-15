@@ -31,15 +31,37 @@ app.authenticationView = kendo.observable({
             if (data && data.result) {
                 console.log(data);
                 app.user = data.result;
-                app.mobileApp.navigate(redirect + '/view.html');
+                provider.Users.currentUser().then(
+                    function (usr) {
+                        app.userData = usr.result;
+                        
+                        var filter = {
+                            'UniqueID': usr.result.Id
+                        };
+                        
+                        var data = app.data.defaultProvider.data('dbo_Users');
+                        
+                        data.get(filter).then(
+                        	function (userSuccess) {                                
+                                app.userDBO = userSuccess.result[0];
+                                app.mobileApp.navigate(redirect + '/view.html');
+                            },
+                            function (userError) {
+                                // todo, error response
+                            }
+                        );
+                        
+                    }, function (bad) {
+                        // todo, error response
+                    });
             } else {
                 init();
             }
         },
         authenticationViewModel = kendo.observable({
             displayName: '',
-            email: '',
-            password: '',
+            email: 'hutnick@progress.com',
+            password: 'demo',
             validateData: function(data) {
                 if (!data.email) {
                     alert('Missing email');

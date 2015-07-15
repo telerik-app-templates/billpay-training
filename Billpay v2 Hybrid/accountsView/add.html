@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Add Account" data-model="app.addAccountView" data-show="app.addAccountView.onShow">
+<div data-role="view" data-title="Add Account" data-model="app.accountsView.accountsViewModel" data-bind="events: { show: addShow }">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <span data-role="view-title"></span>
@@ -12,23 +12,23 @@
             <ul class="form-content" data-role="listview" data-style="inset">
                 <li>
                     <label>Account Type
-                        <select data-bind="value: addAccountViewModel.fields.dropdownlist" data-role="dropdownlist">
-                            <option value="First Option">Credit Card</option>
-                            <option value="Second Option">Bank Account</option>
-                            <option value="Third Option">Paypal</option>
+                        <select data-bind="value: accountsViewModel.addFields.Type" data-role="dropdownlist">
+                            <option value="Water">Water</option>
+                            <option value="Electricity">Electricity</option>
+                            <option value="Gas">Gas</option>
                         </select>
                     </label>
                 </li>
                 <li>
-                    <label>Description
-                        <input data-bind="value: addAccountViewModel.fields.description" placeholder="Description" type="text">
+                    <label>Notes
+                        <input data-bind="value: accountsViewModel.addFields.Notes" placeholder="Notes" type="text">
                     </label>
                 </li>
             </ul>
 
             <div class="button-group">
-                <a data-role="button" data-bind="events: { click: addAccountViewModel.cancel }">Cancel</a>
-                <a class="km-state-active" data-role="button" data-bind="events: { click: addAccountViewModel.submit }">Add</a>
+                <a data-role="button" data-bind="events: { click: cancel }">Cancel</a>
+                <a class="km-state-active" data-role="button" data-bind="events: { click: submit }">Add</a>
             </div>
         </form>
     </div>

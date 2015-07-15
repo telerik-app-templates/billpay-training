@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Accounts" data-model="app.accountsView" data-show="app.accountsView.onShow">
+<div data-role="view" data-title="Accounts" data-model="app.accountsView" data-bind="events: { beforeShow: accountsViewModel.accountShow }">
     <header data-role="header">
         <div data-role="navbar">
             <span data-role="view-title"></span>
@@ -7,12 +7,14 @@
         </div>
     </header>
     
-    <ul data-role="listview" data-style="inset" data-template="accountsViewModelTemplate" data-bind="{ source: accountsViewModel.dataSource, events: {click: accountsViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+    <ul id="account-list">
+        
     </ul>
+    
     <script type="text/x-kendo-template" id="accountsViewModelTemplate">
         <div class="image-with-text">
-            <h3>#: data['UserID'] #</h3>
-            <p>#: data['UniqueID'] #</p>
+            <h3>#: data['Type'] #</h3>
+            <p>#: data['Notes'] #</p>
         </div>
     </script>
     

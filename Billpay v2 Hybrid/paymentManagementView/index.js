@@ -51,14 +51,17 @@ app.paymentManagementView = kendo.observable({
                 Type: ''
             },
             submit: function () {
+                app.mobileApp.showLoading();
                 var data = app.data.defaultProvider.data('dbo_PaymentAccounts');
                 data.create(paymentManagementViewModel.addFields,
-                	function (addSuccess) {
-                    	console.log("addwin");
+                	function (addSuccess) {               
+                    	app.mobileApp.hideLoading();
                     	app.mobileApp.navigate('#:back');
+                    	// toast for success
                 	},
                 	function (addError) {
-                    	console.log("adderror");
+                    	app.mobileApp.hideLoading();
+                    	// toast for error
                 });
             },
             cancel: function () {

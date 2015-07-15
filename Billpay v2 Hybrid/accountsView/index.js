@@ -73,15 +73,18 @@ app.accountsView = kendo.observable({
                 Notes: '',
                 Type: ''
             },
-            submit: function() {                
+            submit: function() {      
+                app.mobileApp.showLoading();
                 var data = app.data.defaultProvider.data('dbo_Accounts');
                 data.create(accountsViewModel.addFields,
                 	function (addSuccess) {
-                    	console.log("addwin");
+                    	app.mobileApp.hideLoading();
                     	app.mobileApp.navigate('#:back');
+                    	// toast for add success
                 	},
                 	function (addError) {
-                    	console.log("adderror");
+                    	// toast for add error
+                    	app.mobileApp.hideLoading();
                 });
             },
         	cancel: function() {

@@ -12,25 +12,27 @@ app.feedbackView = kendo.observable({
     var feedbackViewModel = kendo.observable({
         fields: {
             Title: '',
-            Description: '',
+            Notes: '',
             UserID: ''
         },
         feedbackShow: function (e) {
             feedbackViewModel.fields.Title = '';
-            feedbackViewModel.fields.Description = '';
+            feedbackViewModel.fields.Notes = '';
             feedbackViewModel.fields.UserID = app.userDBO.Id;
             console.log("fbs");
         },
         submit: function() {
+            app.mobileApp.showLoading();
             var data = app.data.defaultProvider.data('FeedbackItem');
             data.create(feedbackViewModel.fields,
                 function (addSuccess) {
-                    console.log("addwin");
+                	app.mobileApp.hideLoading();
                     app.mobileApp.navigate('#:back');
-                    // todo - Toast to say feedback submitted?
+                    // toast for success
                 },
                 function (addError) {
-                    console.log("adderror");
+                	// toast for error
+                	app.mobileApp.hideLoading();
             });
         },
         cancel: function() {

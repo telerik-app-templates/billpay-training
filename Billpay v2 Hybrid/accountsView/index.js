@@ -73,10 +73,7 @@ app.accountsView = kendo.observable({
                 Notes: '',
                 Type: ''
             },
-            submit: function() {
-                console.log("submit");
-                console.log(accountsViewModel);
-                
+            submit: function() {                
                 var data = app.data.defaultProvider.data('dbo_Accounts');
                 data.create(accountsViewModel.addFields,
                 	function (addSuccess) {

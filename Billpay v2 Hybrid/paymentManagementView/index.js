@@ -39,7 +39,30 @@ app.paymentManagementView = kendo.observable({
             },
             currentItem: null,
             add: function (e) {
-                console.log("add PM");
+                app.mobileApp.navigate('#paymentManagementView/add.html');
+            },
+            addShow: function (e) {
+                paymentManagementViewModel.addFields.UserID = app.userDBO.Id;
+            },
+            addFields: {
+                UserID: '',
+                UniqueID: '',
+                Description: '',
+                Type: ''
+            },
+            submit: function () {
+                var data = app.data.defaultProvider.data('dbo_PaymentAccounts');
+                data.create(paymentManagementViewModel.addFields,
+                	function (addSuccess) {
+                    	console.log("addwin");
+                    	app.mobileApp.navigate('#:back');
+                	},
+                	function (addError) {
+                    	console.log("adderror");
+                });
+            },
+            cancel: function () {
+                app.mobileApp.navigate('#:back');
             }
         });
 

@@ -1,0 +1,34 @@
+<div data-role="view" data-title="Add Payment Method" data-model="app.paymentManagementView.paymentManagementViewModel" data-bind="events: { show: addShow }">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <span data-role="view-title"></span>
+            <a data-role="backbutton" data-align="left">Back</a>
+        </div>
+    </header>
+    
+    <div id="addPaymentMethodViewModel" class="form-view">
+        <form>
+            <ul class="form-content" data-role="listview" data-style="inset">
+                <li>
+                    <label>Account Type
+                        <select data-bind="value: paymentManagementViewModel.addFields.Type" data-role="dropdownlist">
+                            <option value="Water">Credit Card</option>
+                            <option value="Electricity">Bank</option>
+                            <option value="Gas">Paypal</option>
+                        </select>
+                    </label>
+                </li>
+                <li>
+                    <label>Notes
+                        <input data-bind="value: paymentManagementViewModel.addFields.Description" placeholder="Description" type="text">
+                    </label>
+                </li>
+            </ul>
+
+            <div class="button-group">
+                <a data-role="button" data-bind="events: { click: cancel }">Cancel</a>
+                <a class="km-state-active" data-role="button" data-bind="events: { click: submit }">Add</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -121,23 +121,23 @@ app.accountsView = kendo.observable({
                     .end();
                 
                 $.each(app.paymentManagementView.paymentManagementViewModel.dataSource.data(), function() {
-                    options.append($("<option />").val(this.ID).text(this.Description));
+                    options.append($("<option />").val(this.Id).text(this.Description));
                 });
                 
                 // set known fields, reset old fields
                 accountsViewModel.payFields.UserID = app.userDBO.Id;
-                accountsViewModel.payFields.AccountID = currentBill.ID;
-                accountsViewModel.payFields.Amount = currentBill.Amount;
+                accountsViewModel.payFields.AccountID = accountsViewModel.currentBill.Id;
+                accountsViewModel.set('payFields.Amount', accountsViewModel.currentBill.Amount);
                 accountsViewModel.payFields.Note = '';
             },
             paySubmit: function (e) {
                 app.mobileApp.showLoading();
                 var data = app.data.defaultProvider.data('dbo_Payments');
+                var selected = $("#paymentTypes option:selected").val();
+                accountsViewModel.payFields.PaymentAccountID = selected;
                 
                 data.create(accountsViewModel.payFields,
                 	function (addSuccess) {
-                    	app.mobileApp.hideLoading();
-                    
                     	// now update Bill status to Paid, aka 1
                     	accountsViewModel.currentBill.Status = 1;
                     	var bills = app.data.defaultProvider.data('dbo_Bills');
@@ -145,8 +145,10 @@ app.accountsView = kendo.observable({
                            function (billSuccess) {
                                 app.mobileApp.navigate('#:back');
                     			// toast for add success
+                            	app.mobileApp.hideLoading();
                         }, function (billError) {
                             // toast for bill update error
+                            app.mobileApp.hideLoading();
                         });
                 	},
                 	function (addError) {

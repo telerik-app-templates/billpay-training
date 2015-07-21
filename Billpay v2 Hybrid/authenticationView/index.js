@@ -45,12 +45,14 @@ app.authenticationView = kendo.observable({
                         	function (userSuccess) {                                
                                 app.userDBO = userSuccess.result[0];
                                 app.mobileApp.navigate(redirect + '/view.html');
+                                
+                                // fire off read for paymentMethods since we may need these w/o hitting the PM screen
+                                app.paymentManagementView.paymentManagementViewModel.dataSource.read();
                             },
                             function (userError) {
                                 // todo, error response
                             }
                         );
-                        
                     }, function (bad) {
                         // todo, error response
                     });

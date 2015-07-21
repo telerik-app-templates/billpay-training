@@ -1,0 +1,46 @@
+<div data-role="view" data-title="Pay" data-model="app.accountsView.accountsViewModel" data-bind="events: { show: payShow }">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <a data-role="backbutton" data-align="left">Back</a>
+            <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;">Pay Now</span>
+        </div>
+    </header>
+
+    <h3>
+        <span data-bind="text: currentBill.Title"></span>
+    </h3>
+    <div id="payDiv">
+        <form>
+            <ul class="form-content" data-role="listview" data-style="inset">
+                <li>
+                    <label>Payment Type
+                        <select id="paymentTypes" data-bind="value: payFields.PaymentAccountID" data-role="dropdownlist">
+        
+    					</select>
+                    </label>
+                </li>
+                <li>
+                    <label>Amount
+                        <input data-bind="value: payFields.Amount" placeholder="Amount" type="text">
+                    </label>
+                </li>
+                <li>
+                    <label>Note
+                        <input data-bind="value: payFields.Note" placeholder="Note (Optional)" type="text">
+                    </label>
+                </li>
+            </ul>
+            <div class="button-group">
+                <a data-role="button" data-bind="events: { click: payCancel }">Cancel</a>
+                <a class="km-state-active" data-role="button" data-bind="events: { click: paySubmit }">Add</a>
+            </div>
+        </form>
+    </div>
+    
+    <script type="text/x-kendo-template" id="paymentTypeTemplate">
+        <div class="image-with-text">
+            <h3>#: data['Type'] #</h3>
+			<p>#: data['Description'] #</p>
+        </div>
+    </script>
+</div>

@@ -4,7 +4,7 @@
   "projectVersion": 1,
   "AppIdentifier": "com.telerik.Billpayv2Hybrid",
   "DisplayName": "Billpay v2 Hybrid",
-  "Author": "",
+  "Author": "Enterprise Solutions",
   "Description": "Billpay v2 Hybrid",
   "BundleVersion": "1.0",
   "AndroidVersionCode": "1",
@@ -43,6 +43,8 @@
     "ID_RESOLUTION_HD720P"
   ],
   "CorePlugins": [
+    "com.telerik.feedback",
+    "com.telerik.plugin.eqatecanalytics",
     "org.apache.cordova.network-information"
   ]
 }

@@ -2,11 +2,26 @@
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left">Back</a>
-            <span data-bind="text: currentItem.Type" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
+            <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;">Method Details</span>
         </div>
     </header>
 
-    <h3 data-bind="text: currentItem.UserID"></h3>
+    <h3>
+        Payment Type
+    </h3>
+    <p>
+        <span data-bind="text: currentItem.Type"></span>
+    </p>
+    
+    <h3>
+        Description
+    </h3>
+    <p>
+        <span data-bind="text: currentItem.Description"></span>
+    </p>
+    
+    <!-- later -> add user delete option, but do soft delete because it will still be referenced with
+				  payments, so maybe have an active state on type? --> 
 
 
 </div>

@@ -1,5 +1,24 @@
 'use strict';
 
+/*
+
+todo section:
+
+V appfeedback 
+V analytics
+
+V billStatus screen for paid bills
+V paymentMethod detail screen
+
++ add maps/Locations
+
+++ post-meeting due to cloud code component, still working on that
++ add push for pending bills,
++ add registration for push 
++ work on cloud code for self account push notification feature
+
+*/
+
 app.accountsView = kendo.observable({
     onShow: function() {}
 });
@@ -105,16 +124,42 @@ app.accountsView = kendo.observable({
             currentBill: null,
             billClick: function (e) {
                 accountsViewModel.set('currentBill', e.dataItem);
-				app.mobileApp.navigate('#accountsView/pay.html');
+
+                if (e.dataItem.Status > 0) {
+                    app.mobileApp.navigate('#accountsView/billStatus.html');
+                } else {
+                    app.mobileApp.navigate('#accountsView/pay.html');
+                }
+            },
+            
+            currentPayment: null,
+            statusShow: function (e) {
+                // get payment related to this bill
+                var filter = {
+                    'BillID': accountsViewModel.currentBill.Id
+                };
+                
+                var data = app.data.defaultProvider.data('dbo_Payments');
+                data.get(filter)
+                .then(function (success) {
+                    // have Payment, this should always work if Bill is in Paid (1) status
+                    var payment = success.result[0];
+                    accountsViewModel.set('currentPayment', payment);
+                    
+                }, function (error) {
+                    // Something has gone wrong
+                    alert(error);
+                });
             },
             payFields: {
                 UserID: '',
-                AccountID: '',
+                BillID: '',
                 PaymentAccountID: '',
                 Amount: '',
                 Note: ''
             },
             payShow: function (e) {
+                // clear and populate available payment types, in case user added one since last visit
                 var options = $("#paymentTypes")
                 	.find('option')
                     .remove()
@@ -126,7 +171,7 @@ app.accountsView = kendo.observable({
                 
                 // set known fields, reset old fields
                 accountsViewModel.payFields.UserID = app.userDBO.Id;
-                accountsViewModel.payFields.AccountID = accountsViewModel.currentBill.Id;
+                accountsViewModel.payFields.BillID = accountsViewModel.currentBill.Id;
                 accountsViewModel.set('payFields.Amount', accountsViewModel.currentBill.Amount);
                 accountsViewModel.payFields.Note = '';
             },
@@ -138,9 +183,12 @@ app.accountsView = kendo.observable({
                 
                 data.create(accountsViewModel.payFields,
                 	function (addSuccess) {
-                    	// now update Bill status to Paid, aka 1
+                    	// we have created the payment successfully if we reach this point,
+                    	// so now update Bill status to Paid, aka 1
+                    
                     	accountsViewModel.currentBill.Status = 1;
                     	var bills = app.data.defaultProvider.data('dbo_Bills');
+                    
                     	bills.updateSingle(accountsViewModel.currentBill,
                            function (billSuccess) {
                                 app.mobileApp.navigate('#:back');

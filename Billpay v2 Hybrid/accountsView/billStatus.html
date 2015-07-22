@@ -1,0 +1,36 @@
+<div data-role="view" data-title="Payment Info" data-model="app.accountsView.accountsViewModel" data-bind="events: { show: statusShow }">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <a data-role="backbutton" data-align="left">Back</a>
+            <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;">Payment Info</span>
+        </div>
+    </header>
+
+    <h3>
+        <span data-bind="text: currentBill.Title"></span>
+    </h3>
+    
+    <h2>
+        Payment Amount:
+    </h2>
+    <p>
+        <!-- todo, format as currency -->
+        <span data-bind="text: currentPayment.Amount"></span>
+    </p>
+    
+    <h2>
+        Payment Date:
+    </h2>
+    <p>
+        <!-- todo, format as date -->
+        <span data-bind="text: currentPayment.CreatedAt"></span>
+    </p>
+
+    <h2>
+        Note:
+    </h2>
+    <p>
+        <span data-bind="text: currentPayment.Note"></span>
+    </p>
+    
+</div>

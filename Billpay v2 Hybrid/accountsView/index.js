@@ -6,11 +6,11 @@ todo section:
 
 V appfeedback 
 V analytics
-
 V billStatus screen for paid bills
 V paymentMethod detail screen
 
 + add maps/Locations
++ add user registration to DL server upon registration
 
 ++ post-meeting due to cloud code component, still working on that
 + add push for pending bills,

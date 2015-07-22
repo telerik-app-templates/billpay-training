@@ -4,11 +4,6 @@ app.feedbackView = kendo.observable({
     onShow: function() {}
 });
 (function(parent) {
-    //FeedbackItem
-    // Title
-    // Description
-    // UserID
-    
     var feedbackViewModel = kendo.observable({
         fields: {
             Title: '',

@@ -6,6 +6,7 @@ app.authenticationView = kendo.observable({
 (function(parent) {
     var provider = app.data.defaultProvider,
         mode = 'signin',
+        //registerRedirect = 'accountsView',
         registerRedirect = 'accountsView',
         signinRedirect = 'accountsView',
         init = function(error) {
@@ -13,7 +14,6 @@ app.authenticationView = kendo.observable({
                 if (error.message) {
                     alert(error.message);
                 }
-
                 return false;
             }
 
@@ -25,15 +25,17 @@ app.authenticationView = kendo.observable({
                 $(activeView).show().siblings().hide();
             }
         },
-        successHandler = function(data) {
+        successHandler = function(data) {            
             var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
 
             if (data && data.result) {
+
                 app.user = data.result;
+                
                 provider.Users.currentUser().then(
                     function (usr) {
                         app.userData = usr.result;
-                        
+
                         var filter = {
                             'UniqueID': usr.result.Id
                         };
@@ -41,7 +43,7 @@ app.authenticationView = kendo.observable({
                         var data = app.data.defaultProvider.data('dbo_Users');
                         
                         data.get(filter).then(
-                        	function (userSuccess) {                                
+                        	function (userSuccess) {
                                 app.userDBO = userSuccess.result[0];
                                 app.mobileApp.navigate(redirect + '/view.html');
                                 
@@ -49,15 +51,50 @@ app.authenticationView = kendo.observable({
                                 app.paymentManagementView.paymentManagementViewModel.dataSource.read();
                             },
                             function (userError) {
-                                // todo, error response
+                                alert(userError);
                             }
                         );
-                    }, function (bad) {
-                        // todo, error response
+                    }, function (noUser) {
+                        // if logged in and no user, that is a problem
+                        alert(noUser);
                     });
             } else {
                 init();
             }
+        },
+        regSuccessHandler = function(data) {
+            // add new DL user w/ UniqueID as BES Id
+            var dlUsers = app.data.defaultProvider.data('dbo_Users');
+            
+            var newUser = {
+                UniqueID: data.result.Id
+            };
+            
+            dlUsers.create(newUser,
+                function (createUserSuccess) {
+                console.log(createUserSuccess);
+                
+                // user created, check what it returns when DL is up, hope the following works when it does XD
+                // can likely refactor this and signin user fetch > redirect code
+                
+                var filter = {
+                    'UniqueID': createUserSuccess.result.Id // if not this, use result id to just grab the same object to get the generated DB ID
+                };
+                
+                dlUsers.get(filter).then(
+                function (userSuccess) {
+                    app.userDBO = userSuccess.result[0];
+                    app.mobileApp.navigate(redirect + '/view.html');
+
+                    // fire off read for paymentMethods since we may need these w/o hitting the PM screen
+                    app.paymentManagementView.paymentManagementViewModel.dataSource.read();
+                }, function (userError) {
+                    
+                });
+                
+            },  function (createUserFail) {
+                console.log(createUserFail);
+            });
         },
         authenticationViewModel = kendo.observable({
             displayName: '',
@@ -101,7 +138,7 @@ app.authenticationView = kendo.observable({
                     return false;
                 }
 
-                provider.Users.register(email, password, attrs, successHandler, init);
+                provider.Users.register(email, password, attrs, regSuccessHandler, init);
             },
             toggleView: function() {
                 mode = mode === 'signin' ? 'register' : 'signin';

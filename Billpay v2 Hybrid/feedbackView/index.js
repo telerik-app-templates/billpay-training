@@ -23,11 +23,11 @@ app.feedbackView = kendo.observable({
                 function (addSuccess) {
                 	app.mobileApp.hideLoading();
                     app.mobileApp.navigate('#:back');
-                    // toast for success
+                    alert("Thanks for your feedback!");
                 },
                 function (addError) {
-                	// toast for error
                 	app.mobileApp.hideLoading();
+                	alert("Problem submitting feedback")
             });
         },
         cancel: function() {

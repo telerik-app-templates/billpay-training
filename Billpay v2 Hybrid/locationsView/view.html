@@ -2,15 +2,16 @@
      data-title="Locations" 
      data-layout="main" 
      data-model="app.locationsView" 
-     data-show="app.locationsView.onShow">
-    <h3>
-        Need a map!
-    </h3>
-    <p>
-        But maps are not included in basic mobile Kendo, so...?
-    </p>
+     data-show="app.locationsView.locationsViewModel.onShow"
+     data-stretch="true">
     
     <div id="map-div">
-        
+
     </div>
+
+    <style>
+      .k-map {
+        height: 500px;
+      }
+    </style>
 </div>

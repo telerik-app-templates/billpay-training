@@ -9,7 +9,8 @@ V analytics
 V billStatus screen for paid bills
 V paymentMethod detail screen
 
-+ add maps/Locations
+V add maps/Locations >> working, asked Mehfuz for help
+
 + add user registration to DL server upon registration
 
 ++ post-meeting due to cloud code component, still working on that

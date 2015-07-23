@@ -57,11 +57,11 @@ app.paymentManagementView = kendo.observable({
                 	function (addSuccess) {               
                     	app.mobileApp.hideLoading();
                     	app.mobileApp.navigate('#:back');
-                    	// toast for success
+                    	alert("Payment Account added successfully!");
                 	},
                 	function (addError) {
                     	app.mobileApp.hideLoading();
-                    	// toast for error
+                    	alert(addError);
                 });
             },
             cancel: function () {

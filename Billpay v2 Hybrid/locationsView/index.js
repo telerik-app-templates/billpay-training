@@ -5,7 +5,7 @@ app.locationsView = kendo.observable({
 });
 (function(parent) {
     var locationsViewModel = kendo.observable({
-        onShow: function() {
+        onShow: function (e) {
             
             app.mobileApp.showLoading();
             var data = app.data.defaultProvider.data('Location');
@@ -16,7 +16,14 @@ app.locationsView = kendo.observable({
                 
                 var current_location = new google.maps.LatLng(38.89394, -121.65100000000001);
                 
-                var map = new google.maps.Map(document.getElementById("map-div"), {
+                var mapOptions = {
+                    center: { lat: 38.89394, lng: -121.65100000000001},
+                    zoom: 8
+                };
+                
+                var map = new google.maps.Map(document.getElementById("map-div"), mapOptions);                  
+                console.log(e);
+                /*var map = new google.maps.Map(document.getElementById("map-div"), {
                     zoom:18,
                     streetViewControl: false,
                     mapTypeControl: false,
@@ -25,7 +32,7 @@ app.locationsView = kendo.observable({
                     draggable: false,
                     scrollwheel: false, 
                     disableDoubleClickZoom: true
-                });
+                });*/
                 
                 $.each(success.result, function (idx, itm) {
                     //newAr.push({ Geo: [ itm.Geo.latitude, itm.Geo.longitude], Office: itm.Office });
@@ -38,6 +45,8 @@ app.locationsView = kendo.observable({
                         icon: 'styles/img/icon-location.png'
                     });
                 });
+                
+                console.log("done map");
                                 
                 /*                
                         	location_marker = new google.maps.Marker({

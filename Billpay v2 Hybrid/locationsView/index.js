@@ -12,14 +12,50 @@ app.locationsView = kendo.observable({
             data.get()
             .then(function (success) {
                 // make map
+                console.log("map next");
                 
-                // BES stores GeoPoint as object, but we need an array, so we quickly convert results into a small array set
-                var newAr = [];
-                $.each(success.result, function (idx, itm) {
-                    newAr.push({ Geo: [ itm.Geo.latitude, itm.Geo.longitude], Office: itm.Office });
+                var current_location = new google.maps.LatLng(38.89394, -121.65100000000001);
+                
+                var map = new google.maps.Map(document.getElementById("map-div"), {
+                    zoom:18,
+                    streetViewControl: false,
+                    mapTypeControl: false,
+                    mapTypeId: 'roadmap',
+                    zoomControl: false,
+                    draggable: false,
+                    scrollwheel: false, 
+                    disableDoubleClickZoom: true
                 });
                 
-                $("#map-div").kendoMap({
+                $.each(success.result, function (idx, itm) {
+                    //newAr.push({ Geo: [ itm.Geo.latitude, itm.Geo.longitude], Office: itm.Office });
+                    var latLng = new google.maps.LatLng(itm.Geo.latitude, itm.Geo.longitude);
+                    
+                    var location_marker = new google.maps.Marker({
+                        position: latLng,
+                        title: itm.Office,
+                        map: map,
+                        icon: 'styles/img/icon-location.png'
+                    });
+                });
+                                
+                /*                
+                        	location_marker = new google.maps.Marker({
+                position: current_location,
+                title: "Current Location",
+                map:map,
+                icon:'img/icon-location.png'
+            });
+                */
+                
+                                
+                // BES stores GeoPoint as object, but we need an array, so we quickly convert results into a small array set
+/*                var newAr = [];
+                $.each(success.result, function (idx, itm) {
+                    newAr.push({ Geo: [ itm.Geo.latitude, itm.Geo.longitude], Office: itm.Office });
+                });*/
+                
+               /* $("#map-div").kendoMap({
                     center: [38.89394, -121.65100000000001],
                     zoom: 10,
                     layers: [{
@@ -34,7 +70,7 @@ app.locationsView = kendo.observable({
                         },
                         titleField: "Office"
                     }]
-                });
+                });*/
                 app.mobileApp.hideLoading();
             }, function (error) {
                 alert(error);

@@ -6,7 +6,6 @@ app.authenticationView = kendo.observable({
 (function(parent) {
     var provider = app.data.defaultProvider,
         mode = 'signin',
-        //registerRedirect = 'accountsView',
         registerRedirect = 'accountsView',
         signinRedirect = 'accountsView',
         init = function(error) {
@@ -63,6 +62,8 @@ app.authenticationView = kendo.observable({
             }
         },
         regSuccessHandler = function(data) {
+            var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
+            
             // add new DL user w/ UniqueID as BES Id
             var dlUsers = app.data.defaultProvider.data('dbo_Users');
             
@@ -72,25 +73,13 @@ app.authenticationView = kendo.observable({
             
             dlUsers.create(newUser,
                 function (createUserSuccess) {
-                console.log(createUserSuccess);
+                // per Everlive standard, return gives us Id (primary key) and CreatedAt, so we have dbo_User field id for userDBO object
                 
-                // user created, check what it returns when DL is up, hope the following works when it does XD
-                // can likely refactor this and signin user fetch > redirect code
-                
-                var filter = {
-                    'UniqueID': createUserSuccess.result.Id // if not this, use result id to just grab the same object to get the generated DB ID
-                };
-                
-                dlUsers.get(filter).then(
-                function (userSuccess) {
-                    app.userDBO = userSuccess.result[0];
-                    app.mobileApp.navigate(redirect + '/view.html');
+                app.userDBO = createUserSuccess.result;
+                app.mobileApp.navigate(redirect + '/view.html');
 
-                    // fire off read for paymentMethods since we may need these w/o hitting the PM screen
-                    app.paymentManagementView.paymentManagementViewModel.dataSource.read();
-                }, function (userError) {
-                    
-                });
+                // fire off read for paymentMethods since we may need these w/o hitting the PM screen
+                app.paymentManagementView.paymentManagementViewModel.dataSource.read();               
                 
             },  function (createUserFail) {
                 console.log(createUserFail);

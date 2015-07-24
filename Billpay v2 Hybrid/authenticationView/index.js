@@ -4,6 +4,33 @@ app.authenticationView = kendo.observable({
     onShow: function() {}
 });
 (function(parent) {
+    var pushSettings = {
+        iOS: {
+            badge: true,
+            sound: true,
+            alert: true,
+            clearBadge: true
+        },
+        android: {
+            projectNumber: 'AIzaSyBA2Qc-lUaUAiZ6ZedWgRqq_YVveJq_CzU'
+        },
+        wp8: {
+            channelName: 'EverlivePushChannel'
+        },
+        notificationCallbackIOS: function(e) {
+            // logic for handling push in iOS
+        },
+        notificationCallbackAndroid: function(e) {
+            // logic for handling push in Android
+        },
+        notificationCallbackWP8: function(e) {
+            // logic for handling push in Windows Phone
+        },
+        customParameters: {
+            dlUserId: ''
+        }
+    };
+    
     var provider = app.data.defaultProvider,
         mode = 'signin',
         registerRedirect = 'accountsView',
@@ -76,10 +103,28 @@ app.authenticationView = kendo.observable({
                 // per Everlive standard, return gives us Id (primary key) and CreatedAt, so we have dbo_User field id for userDBO object
                 
                 app.userDBO = createUserSuccess.result;
-                app.mobileApp.navigate(redirect + '/view.html');
-
+                
                 // fire off read for paymentMethods since we may need these w/o hitting the PM screen
-                app.paymentManagementView.paymentManagementViewModel.dataSource.read();               
+                app.paymentManagementView.paymentManagementViewModel.dataSource.read();
+                
+                // TODO add simulator check, if simulator, we cannot do push reg
+                if (window.navigator.simulator === true) {
+                    pushSettings.customParameters.dlUserId = createUserSuccess.result.Id;
+                    
+                    app.data.defaultProvider.push.register(
+                        pushSettings,
+                        function successCallback(data) {
+                            app.mobileApp.navigate(redirect + '/view.html');
+                        },
+                        function errorCallback(error) {
+                            console.log("push reg fail");
+                            console.log(error);
+                            alert("Device push registration failed.");
+                        }
+                    );   
+                } else {
+                    app.mobileApp.navigate(redirect + '/view.html');
+                }                                             
                 
             },  function (createUserFail) {
                 console.log(createUserFail);

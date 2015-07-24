@@ -8,10 +8,8 @@ V appfeedback
 V analytics
 V billStatus screen for paid bills
 V paymentMethod detail screen
-
 V add maps/Locations >> working, asked Mehfuz for help
-
-+ add user registration to DL server upon registration
+V add user registration to DL server upon registration
 
 ++ post-meeting due to cloud code component, still working on that
 + add push for pending bills,

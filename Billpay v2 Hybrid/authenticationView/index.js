@@ -80,7 +80,7 @@ app.authenticationView = kendo.observable({
                                             var customParameters = {
                                                 dlUserId: userSuccess.result[0].Id
                                             };
-
+ 
                                             // silent errors on Push stuff since user has no control
                                             // potential todo - create an Analytics error for this?
                                             app.data.defaultProvider.push.updateRegistration(customParameters,

@@ -59,6 +59,7 @@ app.authenticationView = kendo.observable({
 
                 provider.Users.currentUser().then(
                     function (usr) {
+                        console.log(usr);
                         app.userData = usr.result;
 
                         var filter = {

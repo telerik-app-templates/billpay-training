@@ -14,7 +14,6 @@ app.feedbackView = kendo.observable({
             feedbackViewModel.fields.Title = '';
             feedbackViewModel.fields.Notes = '';
             feedbackViewModel.fields.UserID = app.userDBO.Id;
-            console.log("fbs");
         },
         submit: function() {
             app.mobileApp.showLoading();

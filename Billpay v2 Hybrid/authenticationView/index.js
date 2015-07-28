@@ -12,7 +12,7 @@ app.authenticationView = kendo.observable({
             clearBadge: true
         },
         android: {
-            projectNumber: 'AIzaSyBA2Qc-lUaUAiZ6ZedWgRqq_YVveJq_CzU'
+            projectNumber: '939319765294'
         },
         wp8: {
             channelName: 'EverlivePushChannel'
@@ -53,10 +53,10 @@ app.authenticationView = kendo.observable({
         },
         successHandler = function(data) {
             var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
-
+            
             if (data && data.result) {
                 app.user = data.result;
-                
+
                 provider.Users.currentUser().then(
                     function (usr) {
                         app.userData = usr.result;
@@ -69,50 +69,43 @@ app.authenticationView = kendo.observable({
                         
                         data.get(filter).then(
                         	function (userSuccess) {
-                                /*
-                                // something is no right here...
+                      			app.userDBO = userSuccess.result[0];
                                 
-                                if (window.navigator.simulator === true) {
-                                    // check for registration, if so update, if not then create
+                                // fire off read for paymentMethods since we may need these w/o hitting the PM screen
+                                app.paymentManagementView.paymentManagementViewModel.dataSource.read();
+                                
+                                if (window.navigator.simulator === undefined) {
+                                    // check for registration > if so do an update, if not then create
                                     app.data.defaultProvider.push.getRegistration(
                                         function (getRegSuccess) {
                                             // have push, just update params
                                             var customParameters = {
-                                                dlUserId: userSuccess.result[0].Id
+                                                "dlUserId": userSuccess.result[0].Id
                                             };
  
-                                            // silent errors on Push stuff since user has no control
-                                            // potential todo - create an Analytics error for this?
                                             app.data.defaultProvider.push.updateRegistration(customParameters,
                                                 function (pushUpdateSuccess) {
-                                                console.log(pushUpdateSuccess);
+                                                alert(pushUpdateSuccess);   
                                             }, function (pushUpdateError) {
-                                                console.log(pushUpdateError);
-                                            });
+                                                alert(pushUpdateError);
+                                            }); 
                                         }, function (getRegFail) {
+                                            alert("reg fail hit");
                                             // no push, register device
                                             pushSettings.customParameters.dlUserId = userSuccess.result[0].Id;
-
                                             app.data.defaultProvider.push.register(
                                                 pushSettings,
                                                 function successCallback(data) {
-                                                    app.mobileApp.navigate(redirect + '/view.html');
+                                                    alert("Device push registration success!");
                                                 },
                                                 function errorCallback(error) {
-                                                    console.log("push reg fail");
-                                                    console.log(error);
                                                     alert("Device push registration failed.");
                                                 }
                                             );   
                                         });
-                                };
-                                */
-                                // proceed with this, none of it relies on Push 
-                                app.userDBO = userSuccess.result[0];
-                                app.mobileApp.navigate(redirect + '/view.html');
+                                }
                                 
-                                // fire off read for paymentMethods since we may need these w/o hitting the PM screen
-                                app.paymentManagementView.paymentManagementViewModel.dataSource.read();
+                                app.mobileApp.navigate(redirect + '/view.html');
                             },
                             function (userError) {
                                 alert(userError);
@@ -146,18 +139,18 @@ app.authenticationView = kendo.observable({
                 app.paymentManagementView.paymentManagementViewModel.dataSource.read();
                 
                 // TODO add simulator check, if simulator, we cannot do push reg
-                if (window.navigator.simulator === true) {
+                if (window.navigator.simulator === undefined) {
                     pushSettings.customParameters.dlUserId = createUserSuccess.result.Id;
                     
                     app.data.defaultProvider.push.register(
                         pushSettings,
                         function successCallback(data) {
+                            alert("Device push registration success!");
                             app.mobileApp.navigate(redirect + '/view.html');
                         },
                         function errorCallback(error) {
-                            console.log("push reg fail");
-                            console.log(error);
                             alert("Device push registration failed.");
+                            app.mobileApp.navigate(redirect + '/view.html');
                         }
                     );   
                 } else {

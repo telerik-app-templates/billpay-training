@@ -51,11 +51,10 @@ app.authenticationView = kendo.observable({
                 $(activeView).show().siblings().hide();
             }
         },
-        successHandler = function(data) {            
+        successHandler = function(data) {
             var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
 
             if (data && data.result) {
-
                 app.user = data.result;
                 
                 provider.Users.currentUser().then(
@@ -70,39 +69,44 @@ app.authenticationView = kendo.observable({
                         
                         data.get(filter).then(
                         	function (userSuccess) {
-                                // check for registration, if so update, if not then create
-                                app.data.defaultProvider.push.getRegistration(
-                                    function (getRegSuccess) {
-                                        // have push, just update params
-                                        var customParameters = {
-                                            dlUserId: userSuccess.result[0].Id
-                                        };
+                                /*
+                                // something is no right here...
+                                
+                                if (window.navigator.simulator === true) {
+                                    // check for registration, if so update, if not then create
+                                    app.data.defaultProvider.push.getRegistration(
+                                        function (getRegSuccess) {
+                                            // have push, just update params
+                                            var customParameters = {
+                                                dlUserId: userSuccess.result[0].Id
+                                            };
 
-                                        // silent errors on Push stuff since user has no control
-                                        // potential todo - create an Analytics error for this?
-                                        app.data.defaultProvider.push.updateRegistration(customParameters,
-                                            function (pushUpdateSuccess) {
-                                            console.log(pushUpdateSuccess);
-                                        }, function (pushUpdateError) {
-                                            console.log(pushUpdateError);
+                                            // silent errors on Push stuff since user has no control
+                                            // potential todo - create an Analytics error for this?
+                                            app.data.defaultProvider.push.updateRegistration(customParameters,
+                                                function (pushUpdateSuccess) {
+                                                console.log(pushUpdateSuccess);
+                                            }, function (pushUpdateError) {
+                                                console.log(pushUpdateError);
+                                            });
+                                        }, function (getRegFail) {
+                                            // no push, register device
+                                            pushSettings.customParameters.dlUserId = userSuccess.result[0].Id;
+
+                                            app.data.defaultProvider.push.register(
+                                                pushSettings,
+                                                function successCallback(data) {
+                                                    app.mobileApp.navigate(redirect + '/view.html');
+                                                },
+                                                function errorCallback(error) {
+                                                    console.log("push reg fail");
+                                                    console.log(error);
+                                                    alert("Device push registration failed.");
+                                                }
+                                            );   
                                         });
-                                    }, function (getRegFail) {
-                                    	// no push, register device
-                                        pushSettings.customParameters.dlUserId = userSuccess.result[0].Id;
-                    
-                                        app.data.defaultProvider.push.register(
-                                            pushSettings,
-                                            function successCallback(data) {
-                                                app.mobileApp.navigate(redirect + '/view.html');
-                                            },
-                                            function errorCallback(error) {
-                                                console.log("push reg fail");
-                                                console.log(error);
-                                                alert("Device push registration failed.");
-                                            }
-                                        );   
-                                    });
-
+                                };
+                                */
                                 // proceed with this, none of it relies on Push 
                                 app.userDBO = userSuccess.result[0];
                                 app.mobileApp.navigate(redirect + '/view.html');
@@ -189,7 +193,7 @@ app.authenticationView = kendo.observable({
                 if (!model.validateData(model)) {
                     return false;
                 }
-
+				console.log("user login next");
                 provider.Users.login(email, password, successHandler, init);
             },
             register: function() {

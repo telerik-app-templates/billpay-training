@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Details" data-model="app.accountsView.accountsViewModel" data-bind="events: { show: detailsShow }">
+<div data-role="view">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left" href="#:back">Back</a>
@@ -12,24 +12,5 @@
     <h3>
         Bill History
     </h3>
-    
-    <ul id="bill-list">
-        
-    </ul>
-    
-    <p id="no-bills-span">No Associated Bills</p>
-    
-    <script type="text/x-kendo-template" id="billTemplate">
-        <div class="image-with-text">
-            <h3>#: data['Title'] #</h3>
-            <p>#: data['Description'] #</p>
-            <p>
-                #if (Status != 'null' && Status > 0)  { #
-         			<p>Paid</p>
-    			# } else { #
-                	<p>Pay Now</p>
-                # } #
-        	</p>
-        </div>
-    </script>
+
 </div>

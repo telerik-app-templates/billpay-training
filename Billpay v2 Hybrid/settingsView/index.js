@@ -4,35 +4,43 @@ app.settingsView = kendo.observable({
     onShow: function() {}
 });
 (function(parent) {
-    var settingsViewModel = kendo.observable({
-        fields: {
-            Title: '',
-            Notes: '',
-            UserID: ''
-        },
-        feedbackShow: function (e) {
-            
-        },
-        submit: function() {
-            /*
-            app.mobileApp.showLoading();
-            var data = app.data.defaultProvider.data('FeedbackItem');
-            data.create(feedbackViewModel.fields,
-                function (addSuccess) {
-                	app.mobileApp.hideLoading();
-                    app.mobileApp.navigate('#:back');
-                    alert("Thanks for your feedback!");
-                },
-                function (addError) {
-                	app.mobileApp.hideLoading();
-                	alert("Problem submitting feedback")
-            });
-            */
-        },
-        cancel: function() {
-            app.mobileApp.navigate('#:back');
-        }
-    });
+    var currentUser,
+        currentView = 'settings',
+    	settingsViewModel = kendo.observable({
+            userFields: {
+                DisplayName: 'Sample',
+                Email: 'Sample',
+                Password: '',
+                CurrentPassword: ''
+            },
+            settingsShow: function (e) {
+                // local reference
+                console.log("show start");
+                currentUser = app.userData;
+                settingsViewModel.userFields.DisplayName = currentUser.DisplayName;
+                settingsViewModel.userFields.Email = currentUser.Email;
+                console.log("show end");
+            },
+            toggleView: function () {
+                console.log("toggle start");
+                if (currentView === 'settings') {
+                    $("#settings-view").hide();
+                    $("#edit-settings-view").show();
+                    currentView = "edit";
+                } else {
+                    $("#settings-view").show();
+                    $("#edit-settings-view").hide();
+                    currentView = "settings";
+                }
+                console.log("toggle end");
+            },
+            submit: function() {
+
+            },
+            cancel: function() {
+                app.mobileApp.navigate('#:back');
+            }
+        });
 
     parent.set('settingsViewModel', settingsViewModel);
 })(app.settingsView);

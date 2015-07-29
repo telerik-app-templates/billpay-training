@@ -1,24 +1,22 @@
-<div data-role="view" data-title="Settings" data-layout="main" data-model="app.settingsView" data-show="app.settingsView.onShow">
+<div data-role="view" data-title="Settings" data-layout="main" 
+     data-model="app.settingsView" data-bind="events: { show: settingsViewModel.settingsShow }">
     <div class="settings-view">
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
-                    <label>Email
-                        <input type="email" data-bind="value: authenticationViewModel.email" required autofocus>
+                    <label>Email                        
+                        <span data-bind="text: settingsViewModel.userFields.Email"></span>
                     </label>
                 </li>
                 <li>
-                    <label>Password
-                        <input type="password" data-bind="value: authenticationViewModel.password" required>
+                    <label>DisplayName
+                        <span data-bind="text: settingsViewModel.userFields.DisplayName"></span>
                     </label>
                 </li>
             </ul>
 
             <div class="button-group button-group-vertical">
-                <a data-role="button" class="km-state-active" data-bind="events: { click: authenticationViewModel.signin }">Sign In</a>
-
-                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Register</a>
-
+                <a data-role="button" data-bind="events: { click: settingsViewModel.toggleView }">Update</a>
             </div>
         </form>
     </div>
@@ -27,27 +25,29 @@
             <ul data-role="listview" data-style="inset">
                 <li>
                     <label>Email
-                        <input type="email" data-bind="value: authenticationViewModel.email" required>
+                        <input type="email" data-bind="value: settingsViewModel.userFields.Email" required>
+                    </label>
+                </li>
+                <li>
+                    <label>Current Password
+                        <input type="password" data-bind="value: settingsViewModel.userFields.CurrentPassword">
                     </label>
                 </li>
                 <li>
                     <label>Password
-                        <input type="password" data-bind="value: authenticationViewModel.password">
+                        <input type="password" data-bind="value: settingsViewModel.userFields.Password">
                     </label>
                 </li>
                 <li>
                     <label>Name
-                        <input type="text" data-bind="value: authenticationViewModel.displayName">
+                        <input type="text" data-bind="value: settingsViewModel.userFields.DisplayName">
                     </label>
                 </li>
             </ul>
             <div class="button-group button-group-vertical">
-                <a class="km-state-active" data-role="button" data-bind="events: { click: authenticationViewModel.register }">Register</a>
-                <a data-role="button" data-bind="events: { click: authenticationViewModel.toggleView }">Sign In</a>
+                <a class="km-state-active" data-role="button" data-bind="events: { click: settingsViewModel.toggleView }">Update</a>
+                <a data-role="button" data-bind="events: { click: settingsViewModel.toggleView }">Cancel</a>
             </div>
         </form>
-    </div>
-    <div class="offline" align="center" style="display:none;">
-        You are currently offline. Before using this app in offline mode you must initialize it while you are online
     </div>
 </div>

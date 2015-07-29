@@ -61,66 +61,19 @@ app.accountsView = kendo.observable({
         accountsViewModel = kendo.observable({
             dataSource: dataSource,
             accountShow: function (e) {
-                accountsViewModel.dataSource.filter( { field: "UserID", operator: "eq", value: app.userDBO.Id } );
-                
-                $("#account-list").kendoMobileListView({
-                    template: $("#accountsViewModelTemplate").html(),
-                    style: 'inset',
-                    click: accountsViewModel.itemClick,
-                    dataSource: accountsViewModel.dataSource
-                });
+             	// paste here 
             },
             itemClick: function(e) {
-                app.mobileApp.navigate('#accountsView/details.html?uid=' + e.dataItem.uid);
+                // navigate here
             },
             detailsShow: function(e) {
-                var item = e.view.params.uid,
-                    itemModel = dataSource.getByUid(item);
-                accountsViewModel.set('currentItem', itemModel);
-
-                var filter = {
-                    'AccountID': itemModel.Id
-                };
-                
-                app.mobileApp.showLoading();
-                
-                var bills = app.data.defaultProvider.data('dbo_Bills');
-                bills.get(filter)
-                .then(function (success) {
-                    if (success.result.length > 0) {
-                        $("#no-bills-span").hide();
-                        $("#bill-list").show();
-                        
-                        var billList = $("#bill-list").data("kendoMobileListView");
-                        
-                        if (billList == undefined) {
-                            $("#bill-list").kendoMobileListView({
-                                template: $("#billTemplate").html(),
-                                style: 'inset',
-                                click: accountsViewModel.billClick,
-                                dataSource: new kendo.data.DataSource({ data: success.result })
-                            });
-                        } else {
-                            var dS = new kendo.data.DataSource({ data: success.result });
-                            billList.setDataSource(dS);
-                        }
-                    } else {
-                        $("#no-bills-span").show();
-                        $("#bill-list").hide();
-                    }
-                    
-                    app.mobileApp.hideLoading();
-                },
-                function (error) {
-                    console.log(error);
-                    app.mobileApp.hideLoading();
-                });
-                
+                // paste here
             },
             currentItem: null,
             
             // bill functionality
             currentBill: null,
+            
             billClick: function (e) {
                 accountsViewModel.set('currentBill', e.dataItem);
 

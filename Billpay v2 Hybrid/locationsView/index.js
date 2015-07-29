@@ -37,8 +37,7 @@ app.locationsView = kendo.observable({
                         new google.maps.Geocoder().geocode({'latLng':latLng}, function(results, status){
                             if (results[1]){
                                 if (results[1].formatted_address){
-                                     var address = results[1].formatted_address;
-                                     $('#location').html(address);
+                                     $('#location').html(results[1].formatted_address);
                                 }
                             } 
                         });

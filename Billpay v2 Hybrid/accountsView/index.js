@@ -109,7 +109,11 @@ app.accountsView = kendo.observable({
                 if (e.dataItem.Status > 0) {
                     app.mobileApp.navigate('#accountsView/billStatus.html');
                 } else {
-                    app.mobileApp.navigate('#accountsView/pay.html');
+                    if (app.paymentManagementView.paymentManagementViewModel.dataSource.data().length > 0) {
+                        app.mobileApp.navigate('#accountsView/pay.html');
+                    } else {
+                        alert("Please use the application menu to navigate to and add a Payment Method in order to pay this bill.");
+                    }                    
                 }
             },
             

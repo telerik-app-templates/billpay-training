@@ -1,23 +1,5 @@
 'use strict';
 
-/*
-
-todo section:
-
-V appfeedback
-V analytics
-V billStatus screen for paid bills
-V paymentMethod detail screen
-V add maps/Locations >> working, asked Mehfuz for help
-V add user registration to DL server upon registration
-
-++ post-meeting due to cloud code component, still working on that
-+ add push for pending bills,
-+ add registration for push 
-+ work on cloud code for self account push notification feature
-
-*/
-
 app.accountsView = kendo.observable({
     onShow: function() {}
 });

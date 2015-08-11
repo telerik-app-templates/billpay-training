@@ -187,7 +187,7 @@ app.authenticationView = kendo.observable({
                 if (!model.validateData(model)) {
                     return false;
                 }
-				console.log("user login next");
+
                 provider.Users.login(email, password, successHandler, init);
             },
             register: function() {

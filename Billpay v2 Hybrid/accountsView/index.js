@@ -125,14 +125,10 @@ app.accountsView = kendo.observable({
                 .then(function (success) {
                     // have Payment, this should always work if Bill is in Paid (1) status
                     var payment = success.result[0];
-                    console.log(payment);
-                    payment.formattedAmount = kendo.toString(payment.Amount, "c");
-                    payment.formattedPayDate = kendo.toString(payment.CreatedAt, "d");                    
-                    accountsViewModel.set('currentPayment', payment);
-                    
-                    // works, just add description to bindable field above ^^ in payment update
-                    console.log(app.paymentManagementView.paymentManagementViewModel.getMethodDescription(payment.PaymentAccountID));
-                    
+                    var pAcct = app.paymentManagementView.paymentManagementViewModel.getMethodDescription(payment.PaymentAccountID);
+                    payment.formattedAmount = kendo.toString(payment.Amount, "c") + " (" + pAcct.Description + ")";
+                    payment.formattedPayDate = kendo.toString(payment.CreatedAt, "d");
+                    accountsViewModel.set('currentPayment', payment);                                                            
                 }, function (error) {
                     // Something has gone wrong
                     alert(error);
@@ -214,12 +210,45 @@ app.accountsView = kendo.observable({
                 
                 data.create(accountsViewModel.addFields,
                 	function (addSuccess) {
-                    	app.mobileApp.hideLoading();
-                    	app.mobileApp.navigate('#:back');
-                    	// toast for add success
+                    	// make bills, one current, one past due
+                    	var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+                        var d = new Date();
+                        var dd = new Date(d.getFullYear(), d.getMonth() - 1, d.getDate());
+                    
+                        var multipleItems = [{
+                            'AccountID' : addSuccess.result.Id,
+                            'Amount' : Math.floor((Math.random() * 150) + 100),
+                            'Description' : 'Monthly Bill',
+                            'StartDate' : d,
+                            'EndDate' : new Date(d.getFullYear(), d.getMonth() + 1, d.getDate() - 1),
+                            'Title' : months[d.getMonth()] + " Payment",
+                            'Status' : 0
+                        }, {
+                            'AccountID' : addSuccess.result.Id,
+                            'Amount' : Math.floor((Math.random() * 150) + 100),
+                            'Description' : 'Monthly Bill',
+                            'StartDate' : dd,
+                            'EndDate' : new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1),
+                            'Title' : months[dd.getMonth()] + " Payment",
+                            'Status' : -1
+                        }];
+
+                    
+                    	var billData = app.data.defaultProvider.data('dbo_Bills');
+                    	billData.create(multipleItems,
+                           function (billSuccess) {
+                            	app.mobileApp.hideLoading();
+                                app.mobileApp.navigate('#:back');
+                                alert("New account added successfully!");
+                        }, function (billFail) {
+                            	app.mobileApp.hideLoading();
+                            	alert("Problem creating account. Try again, otherwise contact support.");
+                        });
+                        
                 	},
                 	function (addError) {
-                    	// toast for add error
+                    	alert("Account creation failed. If this continues, contact support.");
                     	app.mobileApp.hideLoading();
                 });
             },

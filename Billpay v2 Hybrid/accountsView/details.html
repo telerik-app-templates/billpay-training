@@ -27,7 +27,9 @@
                 #if (Status != 'null' && Status > 0)  { #
          			<p>Paid</p>
     			# } else { #
-                	<p>Pay Now</p>
+                <p>Amount due: #: kendo.toString(data['Amount'], "c") #</p>
+                <p>Due date: #: kendo.toString(data['EndDate'], "d") #</p>
+                	<p><a data-role="button">Pay Now</a></p>
                 # } #
         	</p>
         </div>

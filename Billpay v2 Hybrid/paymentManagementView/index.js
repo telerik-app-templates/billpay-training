@@ -66,6 +66,19 @@ app.paymentManagementView = kendo.observable({
             },
             cancel: function () {
                 app.mobileApp.navigate('#:back');
+            },
+            getMethodDescription: function(id) {
+                var i = 0;
+                var dt = dataSource.data();
+                for (i = 0; i < dt.length; i++) {
+                    console.log(id);
+                    console.log(dt[i]);
+                    if (id == dt[i].Id) {
+                        console.log("match!");
+                        console.log(dt[i]);
+                        return dt[i];
+                    }
+                }
             }
         });
 

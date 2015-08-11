@@ -6,29 +6,28 @@
         </div>
     </header>
 
-    <h3>
-        <span data-bind="text: currentBill.Title"></span>
-    </h3>
-    
     <h2>
-        Payment Amount:
+        <span data-bind="text: currentBill.Title"></span>
     </h2>
+    
+    <h3>
+        Payment Amount:
+    </h3>
     <p>
-        <!-- todo, format as currency -->
-        <span data-bind="text: currentPayment.Amount"></span>
+        <span data-bind="text: currentPayment.formattedAmount"></span>
     </p>
     
-    <h2>
+    <h3>
         Payment Date:
-    </h2>
+    </h3>
     <p>
         <!-- todo, format as date -->
-        <span data-bind="text: currentPayment.CreatedAt"></span>
+        <span data-bind="text: currentPayment.formattedPayDate"></span>
     </p>
 
-    <h2>
+    <h3>
         Note:
-    </h2>
+    </h3>
     <p>
         <span data-bind="text: currentPayment.Note"></span>
     </p>

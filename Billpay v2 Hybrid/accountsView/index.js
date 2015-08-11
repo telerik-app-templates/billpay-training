@@ -72,7 +72,7 @@ app.accountsView = kendo.observable({
                     if (success.result.length > 0) {
                         $("#no-bills-span").hide();
                         $("#bill-list").show();
-                        
+                        console.log(success);
                         var billList = $("#bill-list").data("kendoMobileListView");
                         
                         if (billList == undefined) {
@@ -125,7 +125,13 @@ app.accountsView = kendo.observable({
                 .then(function (success) {
                     // have Payment, this should always work if Bill is in Paid (1) status
                     var payment = success.result[0];
+                    console.log(payment);
+                    payment.formattedAmount = kendo.toString(payment.Amount, "c");
+                    payment.formattedPayDate = kendo.toString(payment.CreatedAt, "d");                    
                     accountsViewModel.set('currentPayment', payment);
+                    
+                    // works, just add description to bindable field above ^^ in payment update
+                    console.log(app.paymentManagementView.paymentManagementViewModel.getMethodDescription(payment.PaymentAccountID));
                     
                 }, function (error) {
                     // Something has gone wrong

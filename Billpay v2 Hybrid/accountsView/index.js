@@ -56,6 +56,7 @@ app.accountsView = kendo.observable({
                 app.mobileApp.navigate('#accountsView/details.html?uid=' + e.dataItem.uid);
             },
             detailsShow: function(e) {
+                analytics.Monitor().TrackFeatureStart("Accounts.DetailsShow");
                 var item = e.view.params.uid,
                     itemModel = dataSource.getByUid(item);
                 accountsViewModel.set('currentItem', itemModel);
@@ -97,7 +98,7 @@ app.accountsView = kendo.observable({
                     console.log(error);
                     app.mobileApp.hideLoading();
                 });
-                
+                analytics.Monitor().TrackFeatureStop("Accounts.DetailsShow");
             },
             currentItem: null,
             

@@ -33,9 +33,11 @@ app.paymentManagementView = kendo.observable({
                 app.mobileApp.navigate('#paymentManagementView/details.html?uid=' + e.dataItem.uid);
             },
             detailsShow: function(e) {
+                analytics.Monitor().TrackFeatureStart("PaymentManagement.DetailsView");
                 var item = e.view.params.uid,
                     itemModel = dataSource.getByUid(item);
                 paymentManagementViewModel.set('currentItem', itemModel);
+                analytics.Monitor().TrackFeatureStop("PaymentManagement.DetailsView");
             },
             currentItem: null,
             add: function (e) {
@@ -68,14 +70,11 @@ app.paymentManagementView = kendo.observable({
                 app.mobileApp.navigate('#:back');
             },
             getMethodDescription: function(id) {
+                // get matching payment method for displaying a completed bill
                 var i = 0;
                 var dt = dataSource.data();
                 for (i = 0; i < dt.length; i++) {
-                    console.log(id);
-                    console.log(dt[i]);
                     if (id == dt[i].Id) {
-                        console.log("match!");
-                        console.log(dt[i]);
                         return dt[i];
                     }
                 }

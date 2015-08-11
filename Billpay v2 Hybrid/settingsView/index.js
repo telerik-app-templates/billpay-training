@@ -27,7 +27,7 @@ app.settingsView = kendo.observable({
                 alert("New passwords must match!");
                 return;
             }
-            
+            analytics.Monitor().TrackFeatureStart("Settings.ChangePassword");
             app.data.defaultProvider.Users.changePassword(app.userData.Username, // username
                 settingsViewModel.fields.CurrentPassword, // current password
                 settingsViewModel.fields.NewPassword, // new password
@@ -35,9 +35,11 @@ app.settingsView = kendo.observable({
                 function (data) {
                     alert("Password changed successfully!");
                 	settingsViewModel.cancelChange();
+                	analytics.Monitor().TrackFeatureStop("Settings.ChangePassword");
                 },
                 function(error){
                     alert("Error changing password, if problem persists contact support.");
+                	analytics.Monitor().TrackFeatureStop("Settings.ChangePassword");
                 });
         },
         editUserName: function() {

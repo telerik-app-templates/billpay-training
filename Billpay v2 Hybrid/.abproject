@@ -44,6 +44,8 @@
   ],
   "CorePlugins": [
     "com.telerik.feedback",
-    "com.telerik.plugin.eqatecanalytics"
+    "com.telerik.plugin.eqatecanalytics",
+    "org.apache.cordova.geolocation",
+    "org.apache.cordova.network-information"
   ]
 }

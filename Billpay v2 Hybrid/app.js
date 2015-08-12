@@ -31,7 +31,7 @@
         	feedback.initialize('f7600150-3071-11e5-bc69-77a85df351a1');
             
             analytics.Start();
-          
+
             bootstrap();
         }, false);
     } else {

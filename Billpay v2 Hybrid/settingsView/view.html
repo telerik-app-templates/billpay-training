@@ -1,53 +1,60 @@
-<div data-role="view" data-title="Settings" data-layout="main" 
-     data-model="app.settingsView" data-bind="events: { show: settingsViewModel.settingsShow }">
-    <div class="settings-view">
+<div data-role="view" data-title="Settings" data-layout="main" data-model="app.settingsView" 
+     data-bind="events: { beforeShow: settingsViewModel.settingsShow }">
+    <div id="settings-view">
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
-                    <label>Email                        
-                        <span data-bind="text: settingsViewModel.userFields.Email"></span>
+                    <label>Email
+                        <span data-bind="text: settingsViewModel.fields.Email"></span>
                     </label>
                 </li>
                 <li>
-                    <label>DisplayName
-                        <span data-bind="text: settingsViewModel.userFields.DisplayName"></span>
+					<label>User Name
+                    	<span data-bind="text: settingsViewModel.fields.Username"></span>
                     </label>
                 </li>
             </ul>
 
             <div class="button-group button-group-vertical">
-                <a data-role="button" data-bind="events: { click: settingsViewModel.toggleView }">Update</a>
+                <a data-role="button" data-bind="events: { click: settingsViewModel.editPassword }">Edit Password</a>
+                <!--<a data-role="button" data-bind="events: { click: settingsViewModel.editUsername }">Edit Username</a>-->
+                <a data-role="button" data-bind="events: { click: settingsViewModel.modifyPush }">Modify Push Settings</a>
             </div>
         </form>
     </div>
-    <div class="edit-settings-view" style="display:none;">
+    <div id="edit-password-view" style="display:none;">
         <form>
             <ul data-role="listview" data-style="inset">
                 <li>
-                    <label>Email
-                        <input type="email" data-bind="value: settingsViewModel.userFields.Email" required>
-                    </label>
-                </li>
-                <li>
                     <label>Current Password
-                        <input type="password" data-bind="value: settingsViewModel.userFields.CurrentPassword">
+                        <input type="password" data-bind="value: settingsViewModel.fields.CurrentPassword" required>
                     </label>
                 </li>
                 <li>
-                    <label>Password
-                        <input type="password" data-bind="value: settingsViewModel.userFields.Password">
+                    <label>New Password
+                        <input type="password" data-bind="value: settingsViewModel.fields.NewPassword">
                     </label>
                 </li>
                 <li>
-                    <label>Name
-                        <input type="text" data-bind="value: settingsViewModel.userFields.DisplayName">
+                    <label>New Password Again
+                        <input type="password" data-bind="value: settingsViewModel.fields.NewPasswordAgain">
                     </label>
                 </li>
             </ul>
             <div class="button-group button-group-vertical">
-                <a class="km-state-active" data-role="button" data-bind="events: { click: settingsViewModel.toggleView }">Update</a>
-                <a data-role="button" data-bind="events: { click: settingsViewModel.toggleView }">Cancel</a>
+                <a class="km-state-active" data-role="button" data-bind="events: { click: settingsViewModel.changePassword }">Change Password</a>
+                <a data-role="button" data-bind="events: { click: settingsViewModel.cancelChange }">Cancel</a>
             </div>
         </form>
+    </div>
+    <div id="modify-push-view" style="display:none;">
+        <h3>
+            Push Status:
+        </h3>
+        <p id="push-status">
+            
+        </p>
+        <a id="push-change-button" data-role="button" data-bind="events: { click: settingsViewModel.updatePush }">Modify Push Settings</a>
+        <a data-role="button" data-bind="events: { click: settingsViewModel.cancelChange }">Cancel</a>
     </div>
 </div>

@@ -17,7 +17,8 @@
 
             <div class="button-group button-group-vertical">
                 <a data-role="button" data-bind="events: { click: settingsViewModel.editPassword }">Edit Password</a>
-                <a data-role="button" data-bind="events: { click: settingsViewModel.editUsername }">Edit Username</a>
+                <!--<a data-role="button" data-bind="events: { click: settingsViewModel.editUsername }">Edit Username</a>-->
+                <a data-role="button" data-bind="events: { click: settingsViewModel.modifyPush }">Modify Push Settings</a>
             </div>
         </form>
     </div>
@@ -45,5 +46,15 @@
                 <a data-role="button" data-bind="events: { click: settingsViewModel.cancelChange }">Cancel</a>
             </div>
         </form>
+    </div>
+    <div id="modify-push-view" style="display:none;">
+        <h3>
+            Push Status:
+        </h3>
+        <p id="push-status">
+            
+        </p>
+        <a id="push-change-button" data-role="button" data-bind="events: { click: settingsViewModel.updatePush }">Modify Push Settings</a>
+        <a data-role="button" data-bind="events: { click: settingsViewModel.cancelChange }">Cancel</a>
     </div>
 </div>

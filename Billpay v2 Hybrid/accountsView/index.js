@@ -73,7 +73,18 @@ app.accountsView = kendo.observable({
                     if (success.result.length > 0) {
                         $("#no-bills-span").hide();
                         $("#bill-list").show();
-                        console.log(success);
+
+                        // provide a 'Total Amount Due' display for users to aggregate all bills
+                        var billTotal = 0;
+                        
+                        for (var x = 0; x < success.result.length; x++) {
+                            if (success.result[x].Status < 1) {
+                                billTotal += success.result[x].Amount;
+                            }
+                        }
+                        
+                        $("#aggregate-bill-total").text(kendo.toString(billTotal, 'c'));
+                        
                         var billList = $("#bill-list").data("kendoMobileListView");
                         
                         if (billList == undefined) {

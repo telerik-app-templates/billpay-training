@@ -1,4 +1,4 @@
-<div data-role="view" data-title="Details" data-model="app.accountsView.accountsViewModel" data-bind="events: { show: detailsShow }">
+<div data-role="view">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left" href="#:back">Back</a>
@@ -8,35 +8,9 @@
 
     <h3>User Notes</h3>
     <p data-bind="text: currentItem.Notes"></p>
-    
-    <h3>Total Due:</h3>
-    <p id="aggregate-bill-total">
-        
-    </p>
 
     <h3>
         Bill History
     </h3>
-    
-    <ul id="bill-list">
-        
-    </ul>
-    
-    <p id="no-bills-span">No Associated Bills</p>
-    
-    <script type="text/x-kendo-template" id="billTemplate">
-        <div class="image-with-text">
-            <h3>#: data['Title'] #</h3>
-            <p>#: data['Description'] #</p>
-            <p>
-                #if (Status != 'null' && Status > 0)  { #
-         			<p>Paid</p>
-    			# } else { #
-                <p>Amount due: #: kendo.toString(data['Amount'], "c") #</p>
-                <p>Due date: #: kendo.toString(data['EndDate'], "d") #</p>
-                	<p><a data-role="button">Pay Now</a></p>
-                # } #
-        	</p>
-        </div>
-    </script>
+
 </div>

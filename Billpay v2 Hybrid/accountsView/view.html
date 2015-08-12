@@ -1,4 +1,5 @@
-<div data-role="view" data-title="Accounts" data-model="app.accountsView" data-bind="events: { beforeShow: accountsViewModel.accountShow }">
+<div data-role="view" data-title="Accounts">
+    
     <header data-role="header">
         <div data-role="navbar">
             <span data-role="view-title"></span>
@@ -6,16 +7,5 @@
             <a data-role="button" data-align="right" data-icon="add" data-bind="events: { click: accountsViewModel.add }"></a>
         </div>
     </header>
-    
-    <ul id="account-list">
-        
-    </ul>
-    
-    <script type="text/x-kendo-template" id="accountsViewModelTemplate">
-        <div class="image-with-text">
-            <h3>#: data['Type'] #</h3>
-            <p>#: data['Notes'] #</p>
-        </div>
-    </script>
     
 </div>

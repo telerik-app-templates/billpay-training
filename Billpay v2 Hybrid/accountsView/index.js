@@ -1,5 +1,23 @@
 'use strict';
 
+/*
+
+todo section:
+
+V appfeedback
+V analytics
+V billStatus screen for paid bills
+V paymentMethod detail screen
+V add maps/Locations >> working, asked Mehfuz for help
+V add user registration to DL server upon registration
+
+++ post-meeting due to cloud code component, still working on that
++ add push for pending bills,
++ add registration for push 
++ work on cloud code for self account push notification feature
+
+*/
+
 app.accountsView = kendo.observable({
     onShow: function() {}
 });
@@ -43,89 +61,26 @@ app.accountsView = kendo.observable({
         accountsViewModel = kendo.observable({
             dataSource: dataSource,
             accountShow: function (e) {
-                accountsViewModel.dataSource.filter( { field: "UserID", operator: "eq", value: app.userDBO.Id } );
-                
-                $("#account-list").kendoMobileListView({
-                    template: $("#accountsViewModelTemplate").html(),
-                    style: 'inset',
-                    click: accountsViewModel.itemClick,
-                    dataSource: accountsViewModel.dataSource
-                });
+             	// paste here 
             },
             itemClick: function(e) {
-                app.mobileApp.navigate('#accountsView/details.html?uid=' + e.dataItem.uid);
+                // navigate here
             },
             detailsShow: function(e) {
-                analytics.Monitor().TrackFeatureStart("Accounts.DetailsShow");
-                var item = e.view.params.uid,
-                    itemModel = dataSource.getByUid(item);
-                accountsViewModel.set('currentItem', itemModel);
-
-                var filter = {
-                    'AccountID': itemModel.Id
-                };
-                
-                app.mobileApp.showLoading();
-                
-                var bills = app.data.defaultProvider.data('dbo_Bills');
-                bills.get(filter)
-                .then(function (success) {
-                    if (success.result.length > 0) {
-                        $("#no-bills-span").hide();
-                        $("#bill-list").show();
-
-                        // provide a 'Total Amount Due' display for users to aggregate all bills
-                        var billTotal = 0;
-                        
-                        for (var x = 0; x < success.result.length; x++) {
-                            if (success.result[x].Status < 1) {
-                                billTotal += success.result[x].Amount;
-                            }
-                        }
-                        
-                        $("#aggregate-bill-total").text(kendo.toString(billTotal, 'c'));
-                        
-                        var billList = $("#bill-list").data("kendoMobileListView");
-                        
-                        if (billList == undefined) {
-                            $("#bill-list").kendoMobileListView({
-                                template: $("#billTemplate").html(),
-                                style: 'inset',
-                                click: accountsViewModel.billClick,
-                                dataSource: new kendo.data.DataSource({ data: success.result })
-                            });
-                        } else {
-                            var dS = new kendo.data.DataSource({ data: success.result });
-                            billList.setDataSource(dS);
-                        }
-                    } else {
-                        $("#no-bills-span").show();
-                        $("#bill-list").hide();
-                    }
-                    
-                    app.mobileApp.hideLoading();
-                },
-                function (error) {
-                    console.log(error);
-                    app.mobileApp.hideLoading();
-                });
-                analytics.Monitor().TrackFeatureStop("Accounts.DetailsShow");
+                // paste here
             },
             currentItem: null,
             
             // bill functionality
             currentBill: null,
+            
             billClick: function (e) {
                 accountsViewModel.set('currentBill', e.dataItem);
 
                 if (e.dataItem.Status > 0) {
                     app.mobileApp.navigate('#accountsView/billStatus.html');
                 } else {
-                    if (app.paymentManagementView.paymentManagementViewModel.dataSource.data().length > 0) {
-                        app.mobileApp.navigate('#accountsView/pay.html');
-                    } else {
-                        alert("Please use the application menu to navigate to and add a Payment Method in order to pay this bill.");
-                    }                    
+                    app.mobileApp.navigate('#accountsView/pay.html');
                 }
             },
             
@@ -141,10 +96,8 @@ app.accountsView = kendo.observable({
                 .then(function (success) {
                     // have Payment, this should always work if Bill is in Paid (1) status
                     var payment = success.result[0];
-                    var pAcct = app.paymentManagementView.paymentManagementViewModel.getMethodDescription(payment.PaymentAccountID);
-                    payment.formattedAmount = kendo.toString(payment.Amount, "c") + " (" + pAcct.Description + ")";
-                    payment.formattedPayDate = kendo.toString(payment.CreatedAt, "d");
-                    accountsViewModel.set('currentPayment', payment);                                                            
+                    accountsViewModel.set('currentPayment', payment);
+                    
                 }, function (error) {
                     // Something has gone wrong
                     alert(error);
@@ -226,45 +179,12 @@ app.accountsView = kendo.observable({
                 
                 data.create(accountsViewModel.addFields,
                 	function (addSuccess) {
-                    	// make bills, one current, one past due
-                    	var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-                        var d = new Date();
-                        var dd = new Date(d.getFullYear(), d.getMonth() - 1, d.getDate());
-                    
-                        var multipleItems = [{
-                            'AccountID' : addSuccess.result.Id,
-                            'Amount' : Math.floor((Math.random() * 150) + 100),
-                            'Description' : 'Monthly Bill',
-                            'StartDate' : d,
-                            'EndDate' : new Date(d.getFullYear(), d.getMonth() + 1, d.getDate() - 1),
-                            'Title' : months[d.getMonth()] + " Payment",
-                            'Status' : 0
-                        }, {
-                            'AccountID' : addSuccess.result.Id,
-                            'Amount' : Math.floor((Math.random() * 150) + 100),
-                            'Description' : 'Monthly Bill',
-                            'StartDate' : dd,
-                            'EndDate' : new Date(d.getFullYear(), d.getMonth(), d.getDate() - 1),
-                            'Title' : months[dd.getMonth()] + " Payment",
-                            'Status' : -1
-                        }];
-
-                    
-                    	var billData = app.data.defaultProvider.data('dbo_Bills');
-                    	billData.create(multipleItems,
-                           function (billSuccess) {
-                            	app.mobileApp.hideLoading();
-                                app.mobileApp.navigate('#:back');
-                                alert("New account added successfully!");
-                        }, function (billFail) {
-                            	app.mobileApp.hideLoading();
-                            	alert("Problem creating account. Try again, otherwise contact support.");
-                        });
-                        
+                    	app.mobileApp.hideLoading();
+                    	app.mobileApp.navigate('#:back');
+                    	// toast for add success
                 	},
                 	function (addError) {
-                    	alert("Account creation failed. If this continues, contact support.");
+                    	// toast for add error
                     	app.mobileApp.hideLoading();
                 });
             },

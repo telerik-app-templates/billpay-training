@@ -44,6 +44,7 @@ app.settingsView = kendo.observable({
         },
         settingsShow: function (e) {
             $("#settings-email").text(app.userData.Email);
+            $("#settings-id").text(app.userDBO.Id);
         },
         cancel: function() {
             app.mobileApp.navigate('#:back');

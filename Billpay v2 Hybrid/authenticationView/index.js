@@ -59,7 +59,6 @@ app.authenticationView = kendo.observable({
 
                 provider.Users.currentUser().then(
                     function (usr) {
-                        console.log(usr);
                         app.userData = usr.result;
 
                         var filter = {
@@ -71,6 +70,8 @@ app.authenticationView = kendo.observable({
                         data.get(filter).then(
                         	function (userSuccess) {
                       			app.userDBO = userSuccess.result[0];
+                                console.log("Id for push:");
+                                console.log(app.userDBO);
                                 
                                 // fire off read for paymentMethods since we may need these w/o hitting the PM screen
                                 app.paymentManagementView.paymentManagementViewModel.dataSource.read();
@@ -135,6 +136,8 @@ app.authenticationView = kendo.observable({
                 // per Everlive standard, return gives us Id (primary key) and CreatedAt, so we have dbo_User field id for userDBO object
                 
                 app.userDBO = createUserSuccess.result;
+                console.log("Id for push:");
+                console.log(app.userDBO);
                 
                 // fire off read for paymentMethods since we may need these w/o hitting the PM screen, but first set filter id
                 app.paymentManagementViewModel.dataSource.filter( { field: "UserID", operator: "eq", value: app.userDBO.Id } );

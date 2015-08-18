@@ -1,7 +1,8 @@
 (function (g) {
 
-	var productId = "781be2c09695475ca34513d18ecc4783"; // App unique product key
-
+	//var productId = "781be2c09695475ca34513d18ecc4783"; // App unique product key, dev account
+	var productId = "a2b86510f77a42ccb2eee93cd996b07a"; // App unique product key, demo account
+    
 	// Make analytics available via the window.analytics variable
 	// Start analytics by calling window.analytics.Start()
 	var analytics = g.analytics = g.analytics || {};

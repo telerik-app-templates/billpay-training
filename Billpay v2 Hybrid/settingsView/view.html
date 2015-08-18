@@ -2,22 +2,15 @@
      data-bind="events: { beforeShow: settingsViewModel.settingsShow }">
     <div id="settings-view">
         <form>
-            <ul data-role="listview" data-style="inset">
-                <li>
-                    <label>Email
-                        <span data-bind="text: settingsViewModel.fields.Email"></span>
-                    </label>
-                </li>
-                <li>
-					<label>User Name
-                    	<span data-bind="text: settingsViewModel.fields.Username"></span>
-                    </label>
-                </li>
-            </ul>
+            <h3>
+                Email:
+            </h3>
+            <p>
+                <span id="settings-email"></span>
+            </p>
 
             <div class="button-group button-group-vertical">
                 <a data-role="button" data-bind="events: { click: settingsViewModel.editPassword }">Edit Password</a>
-                <!--<a data-role="button" data-bind="events: { click: settingsViewModel.editUsername }">Edit Username</a>-->
                 <a data-role="button" data-bind="events: { click: settingsViewModel.modifyPush }">Modify Push Settings</a>
             </div>
         </form>

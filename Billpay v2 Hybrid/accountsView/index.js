@@ -43,14 +43,20 @@ app.accountsView = kendo.observable({
         accountsViewModel = kendo.observable({
             dataSource: dataSource,
             accountShow: function (e) {
+                var accountList = $("#account-list").data("kendoMobileListView");
+
                 accountsViewModel.dataSource.filter( { field: "UserID", operator: "eq", value: app.userDBO.Id } );
                 
-                $("#account-list").kendoMobileListView({
-                    template: $("#accountsViewModelTemplate").html(),
-                    style: 'inset',
-                    click: accountsViewModel.itemClick,
-                    dataSource: accountsViewModel.dataSource
-                });
+                if (accountList === undefined) {
+                    $("#account-list").kendoMobileListView({
+                        template: $("#accountsViewModelTemplate").html(),
+                        style: 'inset',
+                        click: accountsViewModel.itemClick,
+                        dataSource: accountsViewModel.dataSource
+                    });
+                } else {
+                    accountsViewModel.dataSource.read();
+                }
             },
             itemClick: function(e) {
                 app.mobileApp.navigate('#accountsView/details.html?uid=' + e.dataItem.uid);

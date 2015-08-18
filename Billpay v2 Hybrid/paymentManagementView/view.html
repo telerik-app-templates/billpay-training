@@ -1,4 +1,5 @@
-<div data-role="view" data-title="Payment Methods" data-model="app.paymentManagementView" data-show="app.paymentManagementView.onShow">
+<div data-role="view" data-title="Payment Methods" data-model="app.paymentManagementView" 
+     data-bind="events: { beforeShow: paymentManagementViewModel.paymentManagementShow }">
     <header data-role="header">
         <div data-role="navbar">
             <span data-role="view-title"></span>
@@ -7,8 +8,9 @@
         </div>
     </header>
     
-    <ul data-role="listview" data-style="inset" data-template="paymentManagementViewModelTemplate" data-bind="{ source: paymentManagementViewModel.dataSource, events: {click: paymentManagementViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+    <ul id="payments-list">
     </ul>
+
     <script type="text/x-kendo-template" id="paymentManagementViewModelTemplate">
         <div class="image-with-text">
             <h3>#: data['Type'] #</h3>

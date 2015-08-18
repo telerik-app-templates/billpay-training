@@ -25,10 +25,27 @@ app.paymentManagementView = kendo.observable({
                     }
                 }
             },
+            serverFiltering: true
         },
         dataSource = new kendo.data.DataSource(dataSourceOptions),
         paymentManagementViewModel = kendo.observable({
             dataSource: dataSource,
+            paymentManagementShow: function(e) {
+                var paymentsList = $("#payments-list").data("kendoMobileListView");
+
+                paymentManagementViewModel.dataSource.filter( { field: "UserID", operator: "eq", value: app.userDBO.Id } );
+                
+                if (paymentsList === undefined) {
+                    $("#payments-list").kendoMobileListView({
+                        template: $("#paymentManagementViewModelTemplate").html(),
+                        style: 'inset',
+                        click: paymentManagementViewModel.itemClick,
+                        dataSource: paymentManagementViewModel.dataSource
+                    });
+                } else {
+                    paymentManagementViewModel.dataSource.read();
+                }
+            },
             itemClick: function(e) {
                 app.mobileApp.navigate('#paymentManagementView/details.html?uid=' + e.dataItem.uid);
             },

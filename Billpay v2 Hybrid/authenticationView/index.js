@@ -136,10 +136,10 @@ app.authenticationView = kendo.observable({
                 
                 app.userDBO = createUserSuccess.result;
                 
-                // fire off read for paymentMethods since we may need these w/o hitting the PM screen
+                // fire off read for paymentMethods since we may need these w/o hitting the PM screen, but first set filter id
+                app.paymentManagementViewModel.dataSource.filter( { field: "UserID", operator: "eq", value: app.userDBO.Id } );
                 app.paymentManagementView.paymentManagementViewModel.dataSource.read();
                 
-                // TODO add simulator check, if simulator, we cannot do push reg
                 if (window.navigator.simulator === undefined) {
                     pushSettings.customParameters.dlUserId = createUserSuccess.result.Id;
                     
@@ -164,7 +164,7 @@ app.authenticationView = kendo.observable({
         },
         authenticationViewModel = kendo.observable({
             displayName: '',
-            email: 'hutnick@progress.com',
+            email: 'bob@kingbob.com',
             password: 'demo',
             validateData: function(data) {
                 if (!data.email) {

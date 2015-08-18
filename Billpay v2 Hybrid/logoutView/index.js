@@ -6,14 +6,12 @@ app.logoutView = kendo.observable({
 (function(parent) {
     var logoutViewModel = kendo.observable({
         logoutShow: function (e) {
-            // throwing Kendo error:
-            // Uncaught TypeError: Cannot read property 'stop' of undefined
-            // look more into this, same line as below works in SAM
-			app.data.defaultProvider.Users.logout();
-            app.mobileApp.navigate('authenticationView/view.html');
-        },
-        cancel: function() {
-            app.mobileApp.navigate('#:back');
+			app.data.defaultProvider.Users.logout(
+            function (success) {
+                app.mobileApp.navigate('authenticationView/view.html');
+            }, function (error) {
+                alert("Problem with logging out. Please shut down the app if this continues to login again.");
+            });
         }
     });
 
